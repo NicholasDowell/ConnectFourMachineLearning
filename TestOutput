@@ -1,0 +1,10 @@
+Final Play : 6
+horizontal win
+| _ | _ | _ | _ | _ | _ | _ |
+| _ | _ | _ | _ | _ | _ | _ |
+| _ | _ | _ | _ | _ | _ | _ |
+| _ | _ | O | X | O | _ | _ |
+| _ | _ | O | X | X | X | X |
+| O | X | O | X | O | O | X |
+moves = 15
+winner = 1
