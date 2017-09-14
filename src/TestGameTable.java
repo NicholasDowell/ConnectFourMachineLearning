@@ -9,16 +9,10 @@ public class TestGameTable {
 		GameBoard board = new GameBoard();
 		GameTable table = new GameTable();
 		
-		
-		
-		for (int i = 0; i < 20; i ++){
-			table.advanceGame();
-			table.printBoard();
-			
-			System.out.println("Winner " + table.getWinner());
-			System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-			
-		}
+		table.playGame();
+		table.printBoard();
+		System.out.println("moves = " + table.getTurns());
+		System.out.println("winner = " + table.getWinner());
 		
 		
 		

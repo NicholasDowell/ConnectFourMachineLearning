@@ -107,9 +107,13 @@
 		 * returns true if this square holds the same pieceValue as the corresponding coordinates on the passed board
 		 */
 		public boolean matchesBoard(int column,int row, GameBoard theBoard){
-			int boardValue = theBoard.getPiece(column, row);
+			int xFocus = column + xChange;
+			int yFocus = row + yChange;
+			int boardValue = theBoard.getPiece(xFocus, yFocus);
+			System.out.println("Matching x" + xFocus + "y" + yFocus + "? " + theBoard.getPiece(xFocus, yFocus));
 			return boardValue == pieceValue;
 			
 		}
+		
 		
 	}

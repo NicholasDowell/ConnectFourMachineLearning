@@ -33,7 +33,6 @@ public class GameBoard {
 	 * sets a space equal to a certain integer value
 	 */
 	public void setSpace(int column, int row, int playerID){
-		System.out.println("setting piece at " + column + " , " + row);
 		grid[column][row] = playerID;
 		
 	}

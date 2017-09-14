@@ -176,11 +176,24 @@ public class Condition {
 	public int weigh(int column, int row, GameBoard theBoard){
 		
 		for (int squareIndex = 0; squareIndex < numberOfSquares; squareIndex ++){
+			System.out.println("Examining square " + squareIndex);
 			if (!squares[squareIndex].matchesBoard(column, row, theBoard)){
 				return 0;
 			}
 		}
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Condition is triggered at x" + column + "y" + row + " weight of" + weight);
 		return weight;
+	}
+	/**
+	 * TESTING FUNCTION
+	 * this function sets the next available index of the square array to a new X,Y value
+	 * 
+	 */
+	public void setOneSquare(int x, int y, int p, int w){
+		Square s = new Square(x,y,p);
+		squares[numberOfSquares] = s;
+		numberOfSquares++;
+		weight = w;
 	}
 	
 }

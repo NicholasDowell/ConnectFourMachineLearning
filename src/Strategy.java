@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Strategy {
 	public ArrayList<Condition> conditions;
 	public int playerID;
+	private int generation; //the generation may be useful at some point
 	
 	//maybe store a number of wins? or a win rate? as an integer for testing purposes.
 	
@@ -17,6 +18,7 @@ public class Strategy {
 	 */
 	public Strategy(int newPlayerID){
 		playerID = newPlayerID;
+		conditions = new ArrayList<Condition>();
 		updateConditionPieceValues();
 	}
 	/**
@@ -27,14 +29,18 @@ public class Strategy {
 		double sumOfWeights = 0;
 		for (int conditionIndex = 0; conditionIndex < conditions.size(); conditionIndex++){
 			 sumOfWeights += conditions.get(conditionIndex).weigh(column,row,theBoard);
+			 
 		}
+		System.out.println("Strategy summing a weight of: " + sumOfWeights +" at index " + column + row);
 		return sumOfWeights;
 	}
 	/**
 	 * updates all the conditions to match this player's ID
 	 */
 	public void updateConditionPieceValues(){
+		
 		for (int conditionsIndex = 0; conditionsIndex < conditions.size(); conditionsIndex ++){
+			System.out.println("updating " + conditionsIndex);
 			conditions.get(conditionsIndex).updatePieceValues(playerID);
 		}
 	}

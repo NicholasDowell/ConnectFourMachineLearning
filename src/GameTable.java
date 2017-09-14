@@ -1,3 +1,4 @@
+import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +13,7 @@ public class GameTable {
 	private GameBoard board;
 	private int activePlayer = 1;
 	private int winner;
+	private int turns = 0;
 	/**
 	 * constructs a new GameTable with an empty board
 	 */
@@ -28,17 +30,33 @@ public class GameTable {
 	 * returns the column where the player wants to play
 	 */
 	public int choosePlay(){
+		System.out.println("Choosing new play" + "    - number of available columns: " + openColumnsArray().length);
 		Strategy currentPlayer = getActivePlayer();
 		int[] openColumns = openColumnsArray();
 		double[] weightSums = new double[openColumns.length];
+		
+		// The following loop prints out the contents of the open columns array
+		System.out.println("OPEN COLUMNS length" + openColumns.length);
+		for (int i = 0; i < openColumns.length; i ++){
+			
+			System.out.print(openColumns[i]);
+			
+		}
+		System.out.println("");
 		//loops through each possible play, adding up its weight
 		for (int columnIndex = 0; columnIndex < openColumns.length; columnIndex ++){
 			GameBoard tempBoard = board;
 			int column = openColumns[columnIndex];
 			int row = highestPiece(column) + 1;
-			placePawn(column,tempBoard);
+			//placePawn(column,tempBoard);
 			weightSums[columnIndex] = currentPlayer.weigh(column,row,tempBoard);		
 		}
+		// PRints out the weights of all open columns
+		System.out.println( "V Weight Sums V");
+		for (int i = 0; i < weightSums.length; i ++){
+			System.out.println(weightSums[i]);
+		}
+		System.out.println("^       ^");
 		
 		double highestWeight = 0;
 		//finds the column with the highest weight
@@ -50,17 +68,28 @@ public class GameTable {
 		//for each column with the highest value, add the COLUMN NUMBER to a separate array
 		//then we can select one play with the highest weight at random
 		ArrayList<Integer> highestWeights = new ArrayList<Integer>();
+		
 		for (int weightIndex = 0; weightIndex < weightSums.length; weightIndex ++){
 			if (weightSums[weightIndex] == highestWeight){
+				System.out.println("Column " + openColumns[weightIndex] + " is highest");
 				highestWeights.add(openColumns[weightIndex]);
 			}
 		}
+		// This loop is test for making sure the highestWeights array works
+		System.out.println("ColumnsWithHighWeight . length: " + highestWeights.size());
+		for (int i = 0; i < highestWeights.size(); i ++){
+			System.out.println(highestWeights.get(i));
+		}
+		
 		int finalPlay = 0;
-		int randomHighestWeightColumn = (int)Math.random() * highestWeights.size();
-		finalPlay = openColumns[randomHighestWeightColumn];
+		System.out.println("WEIGHTSSIZE" + highestWeights.size());
+		int randomHighestWeightColumn = (int)(Math.random() * highestWeights.size());
+		System.out.println("Ran Index"  + randomHighestWeightColumn);
+		System.out.println("opencolumns[randomhihg] " + openColumns[randomHighestWeightColumn]);
+		finalPlay = highestWeights.get(randomHighestWeightColumn);
 		
 		
-		
+		System.out.println("Final Play : " + finalPlay);
 		return finalPlay;
 	}
 	/**
@@ -68,19 +97,14 @@ public class GameTable {
 	 */
 	public void advanceGame(){
 		int column = 0;
-		switch (activePlayer){
-		case 1: column = playerOne.choosePlay(board);
-				placePawn(column, board);
-				break;
-		case 2: column = playerTwo.choosePlay(board);
-				placePawn(column, board);
-				break;
-		}
-		
+		column = choosePlay();
+		placePawn(column, board);
+		turns ++;
 		if (connectsFour(column, highestPiece(column))){
 			winner = activePlayer;
 		}
 		changeActivePlayer();	
+		
 	}
 	/**
 	 * Game running function - running this function will change the int winner to 1 or 2 if a player won, or zero if tie.
@@ -121,26 +145,30 @@ public class GameTable {
 	 * returns an array containing all of the columns with at least once space available to play in
 	 */
 	public int[] openColumnsArray(){
+		
 		int width = board.getWidth();
+		
 		ArrayList<Integer> columnsArray = new ArrayList<Integer>();
 		int numberOfOpenColumns = 0;
+		
+		System.out.println("The width : " + width);
 		for (int columnNumber = 0; columnNumber < width; columnNumber ++){
-			if (columnIsOpen(columnNumber)){
-				System.out.println("found open column: " + columnNumber);
+			boolean openColumn = columnIsOpen(columnNumber);
+			System.out.println(" Column " + columnNumber + "is Open: " + openColumn);
+			if (openColumn){
 				columnsArray.add(columnNumber);
 				numberOfOpenColumns++;
+				System.out.println("loop" + numberOfOpenColumns);
 			}
 		}
-		System.out.println("number of open columns : " + numberOfOpenColumns);
+		System.out.println("number of open columns: " + numberOfOpenColumns);
 		
 		int[] returnArray = new int[numberOfOpenColumns];
 		for (int i = 0; i < numberOfOpenColumns; i ++){
-			System.out.println(" i = " + i);
-			System.out.println("adding column : " + columnsArray.get(i) );
+			
 			returnArray[i] = columnsArray.get(i);
 		}
-		System.out.println("Array function ran");
-		System.out.println("returnArray length " + returnArray.length);
+		System.out.println("OCA returning array of length : " + returnArray.length);
 		return returnArray;
 	}
 	
@@ -372,6 +400,30 @@ public class GameTable {
 			return playerOne;
 		}
 		else return playerTwo;
+	}
+	/**
+	 * returns the board
+	 */
+	public GameBoard getBoard(){
+		return board;
+	}
+	/**
+	 * returns the first player's strategy
+	 */
+	public Strategy getPlayerOneStrategy(){
+		return playerOne;
+	}
+	/**
+	 * returns the second players strategy
+	 */
+	public Strategy getPlayerTwoStrategy(){
+		return playerTwo;
+	}
+	/**
+	 * gets number of passed turns
+	 */
+	public int getTurns(){
+		return turns;
 	}
 	
 	
