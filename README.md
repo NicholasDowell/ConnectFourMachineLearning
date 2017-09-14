@@ -18,7 +18,8 @@ Objects:
   
   Square    - A coordinate pair in (x,y) form which points to a spot on the grid relative to the move in question.
   
-  TestDecisionFunction -[Currently not functioning] A class which WILL test the code for the Strategy choosing where to play based on its conditions
+  TestDecisionFunction - A class which tests the code for the Strategy choosing where to play based on its conditions. 
+                  Currently the strategies have no conditions, so play is random.
   
   TestGameTable - A class which tests the GameTable object for functionality.
   
