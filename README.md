@@ -1,5 +1,9 @@
 # ConnectFourMachineLearning
-This project aims to create an intelligence which will learn how to find the winning strategy for connect four
+This project aims to create an intelligence which will learn how to find the winning strategy for connect four.
+
+TODO: 
+1. Implement saving function so that strategies can be saved/
+2. Create a controller object which will allow user interaction for the evolution process.
 
 
 
